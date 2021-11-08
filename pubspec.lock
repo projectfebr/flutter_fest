@@ -423,7 +423,7 @@ packages:
     source: hosted
     version: "1.8.1"
   spider:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: spider
       url: "https://pub.dartlang.org"
