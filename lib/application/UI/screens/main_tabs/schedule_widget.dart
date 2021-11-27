@@ -1,104 +1,181 @@
 import 'package:flutter/material.dart';
-
-class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
-  final double minHeight = 50;
-  final double maxHeight = 300;
-
-  // _SliverAppBarDelegate({
-  //   required this.minHeight,
-  //   required this.maxHeight,
-  // });
-
-  @override
-  double get minExtent => minHeight;
-  @override
-  double get maxExtent => maxHeight;
-
-  @override
-  Widget build(
-      BuildContext context,
-      double shrinkOffset,
-      bool overlapsContent,
-      ) {
-    return ColoredBox(
-      color: Colors.white,
-      child: Column(
-        children: [
-          const Expanded(child: SizedBox()),
-          Text("$shrinkOffset, $overlapsContent")
-        ],
-      ),
-    );
-  }
-
-  @override
-  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
-    return maxHeight != oldDelegate.maxHeight ||
-        minHeight != oldDelegate.minHeight;
-  }
-}
+import 'package:flutter_fest/resources/resources.dart';
 
 class ScheduleWidget extends StatelessWidget {
   const ScheduleWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              Container(color: Colors.pink, height: 150.0),
-              Container(color: Colors.cyan, height: 150.0),
-              Container(color: Colors.indigo, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.pink, height: 150.0),
-              Container(color: Colors.cyan, height: 150.0),
-              Container(color: Colors.indigo, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-            ],
+    final topInset = MediaQuery.of(context).padding.top;
+
+    return SafeArea(
+      top: false,
+      child: CustomScrollView(
+        slivers: [
+          const _LogoWidget(),
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: _SliverAppBarDelegate(topInset: topInset),
           ),
-        ),
-        SliverPersistentHeader(
-          pinned: true,
-          floating: true,
-          delegate: _SliverAppBarDelegate(),
-        ),
-        SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              Container(color: Colors.pink, height: 150.0),
-              Container(color: Colors.cyan, height: 150.0),
-              Container(color: Colors.indigo, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.pink, height: 150.0),
-              Container(color: Colors.cyan, height: 150.0),
-              Container(color: Colors.indigo, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-              Container(color: Colors.blue, height: 150.0),
-            ],
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                Container(color: Colors.pink, height: 150.0),
+                Container(color: Colors.cyan, height: 150.0),
+                Container(color: Colors.indigo, height: 150.0),
+                Container(color: Colors.blue, height: 150.0),
+                Container(color: Colors.blue, height: 150.0),
+                Container(color: Colors.blue, height: 150.0),
+                Container(color: Colors.blue, height: 150.0),
+                Container(color: Colors.blue, height: 150.0),
+                Container(color: Colors.blue, height: 150.0),
+                Container(color: Colors.pink, height: 150.0),
+                Container(color: Colors.cyan, height: 150.0),
+                Container(color: Colors.indigo, height: 150.0),
+                Container(color: Colors.blue, height: 150.0),
+                Container(color: Colors.blue, height: 150.0),
+                Container(color: Colors.blue, height: 150.0),
+                Container(color: Colors.blue, height: 150.0),
+                Container(color: Colors.blue, height: 150.0),
+                Container(color: Colors.blue, height: 150.0),
+              ],
+            ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LogoWidget extends StatelessWidget {
+  const _LogoWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: SizedBox(
+        height: 204,
+        child: Stack(
+          children: [
+            Positioned(
+              top: 0,
+              left: 0,
+              child: Image.asset(AppImages.sheduleBg),
+            ),
+            Positioned(
+              top: 84,
+              left: 20,
+              child: Image.asset(AppImages.sheduleFfLogo),
+            ),
+            Positioned(
+              top: 65,
+              right: 20,
+              child: Image.asset(AppImages.sheduleSurfLogo),
+            ),
+          ],
         ),
-      ],
+      ),
+    );
+  }
+}
+
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  final double _height = 56;
+  final double topInset;
+
+  _SliverAppBarDelegate({required this.topInset});
+
+  @override
+  double get minExtent => _height + topInset;
+  @override
+  double get maxExtent => _height + topInset;
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return _SectionsButtonsWidget(topInset: topInset);
+  }
+
+  @override
+  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
+    return false;
+  }
+}
+
+class _SectionsButtonsWidget extends StatelessWidget {
+  const _SectionsButtonsWidget({Key? key, required this.topInset})
+      : super(key: key);
+
+  final double topInset;
+
+  @override
+  Widget build(BuildContext context) {
+    const totalItem = 4;
+    const startGradientPoint = 1;
+    const itemGradientWidth = 2;
+    const halfItemGradientWidth = itemGradientWidth / 2;
+    const endGradientPoint =
+        totalItem * itemGradientWidth + halfItemGradientWidth;
+    return Container(
+      padding: EdgeInsets.only(top: topInset),
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: ListView.separated(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        scrollDirection: Axis.horizontal,
+        itemCount: totalItem,
+        itemBuilder: (context, index) {
+          final currentGradientStartPoint =
+              -(startGradientPoint + index * itemGradientWidth);
+          final currentGradientEndPoint =
+              endGradientPoint + currentGradientStartPoint;
+
+          return Center(
+            child: SizedBox(
+              height: 36,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                  padding: MaterialStateProperty.all(EdgeInsets.zero),
+                  elevation: MaterialStateProperty.all(0),
+                  minimumSize: MaterialStateProperty.all(Size.zero),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                  ),
+                ),
+                child: Ink(
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment(
+                              currentGradientStartPoint.toDouble(), 0),
+                          end: Alignment(currentGradientEndPoint.toDouble(), 0),
+                          colors: const [Color(0xFF00BD13), Color(0xFF170AF4)]),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(18))),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Text('Секция $index'),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const SizedBox(
+            width: 10,
+          );
+        },
+      ),
     );
   }
 }

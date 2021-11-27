@@ -9,7 +9,6 @@ class MainTabsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return const Scaffold(
       body: _BodyWidget(),
       bottomNavigationBar: _NavBarWidget(),
@@ -23,20 +22,27 @@ class _BodyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentIndex =
-    context.select<MainTabsViewModel, int>((vm) => vm.currentTabIndex);
+        context.select<MainTabsViewModel, int>((vm) => vm.currentTabIndex);
     return IndexedStack(
       index: currentIndex,
       children: const [
         ScheduleWidget(),
-        Center(child: Text('2', style: TextStyle(color: Colors.green, fontSize: 40),),),
-
-        Center(child: Text('3', style: TextStyle(color: Colors.green, fontSize: 40),),),
-
+        Center(
+          child: Text(
+            '2',
+            style: TextStyle(color: Colors.green, fontSize: 40),
+          ),
+        ),
+        Center(
+          child: Text(
+            '3',
+            style: TextStyle(color: Colors.green, fontSize: 40),
+          ),
+        ),
       ],
     );
   }
 }
-
 
 class _NavBarWidget extends StatelessWidget {
   const _NavBarWidget({
@@ -54,9 +60,13 @@ class _NavBarWidget extends StatelessWidget {
       _BottomBarItemFactory(AppImages.tabbarCalendar, 'Расписание'),
       _BottomBarItemFactory(AppImages.tabbarBookmark, 'Избранное'),
       _BottomBarItemFactory(AppImages.tabbarPoint, 'Как добраться'),
-    ].asMap().map((index, value) {
-      return MapEntry(index, value.build(index, currentIndex, theme));
-    }).values.toList();
+    ]
+        .asMap()
+        .map((index, value) {
+          return MapEntry(index, value.build(index, currentIndex, theme));
+        })
+        .values
+        .toList();
 
     return BottomNavigationBar(
       currentIndex: currentIndex,
@@ -66,16 +76,14 @@ class _NavBarWidget extends StatelessWidget {
   }
 }
 
-
-
-class _BottomBarItemFactory{
+class _BottomBarItemFactory {
   final String iconName;
   final String tooltip;
 
   _BottomBarItemFactory(this.iconName, this.tooltip);
 
-  BottomNavigationBarItem build(int index,
-      int currentIndex, BottomNavigationBarThemeData theme) {
+  BottomNavigationBarItem build(
+      int index, int currentIndex, BottomNavigationBarThemeData theme) {
     final color = index == currentIndex
         ? theme.selectedItemColor
         : theme.unselectedItemColor;
