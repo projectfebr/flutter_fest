@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fest/resources/app_fonts.dart';
+import 'package:flutter_fest/resources/resources.dart';
 
 class ScheduleRowSessionWidget extends StatelessWidget {
   const ScheduleRowSessionWidget({Key? key}) : super(key: key);
@@ -9,18 +10,22 @@ class ScheduleRowSessionWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFF101115),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(20),
       ),
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.only(left: 16, top: 4, right: 4, bottom: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       child: Column(
         children: [
           Row(
             children: const [
-              _SpeakerWidget(),
+              Expanded(child: _SpeakerWidget()),
               _FavoriteButtonWidget(),
             ],
           ),
-          const _DescriptionWidget(),
+          Padding(
+            padding: const EdgeInsets.only(right: 12.0),
+            child: const _DescriptionWidget(),
+          ),
         ],
       ),
     );
@@ -42,14 +47,19 @@ class _SpeakerWidget extends StatelessWidget {
           ),
         ),
         SizedBox(width: 8),
-        Text(
-          'Иннокентий Хвастуновский',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-            fontFamily: AppFonts.basisGrotesquePro,
-            fontWeight: FontWeight.w500,
-            height: 1.4285714286,
+        Expanded(
+          child: Text(
+            'Иннокентий Христорожденнныйвсубботу',
+            maxLines: 1,
+            softWrap: false,
+            overflow: TextOverflow.fade,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+              fontFamily: AppFonts.basisGrotesquePro,
+              fontWeight: FontWeight.w500,
+              height: 1.4285714286,
+            ),
           ),
         ),
       ],
@@ -62,7 +72,13 @@ class _FavoriteButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return IconButton(
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      iconSize: 24,
+      onPressed: () {},
+      icon: Image.asset(AppImages.bookmark),
+    );
   }
 }
 
@@ -71,6 +87,17 @@ class _DescriptionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return  Text(
+      'Субъуктивность в оценке дизайне',
+      maxLines: 2,
+      overflow: TextOverflow.fade,
+      style: TextStyle(
+        color: Colors.white.withOpacity(0.88),
+        fontSize: 18,
+        fontFamily: AppFonts.steinback,
+        fontWeight: FontWeight.w500,
+        height: 1.22222,
+      ),
+    );
   }
 }

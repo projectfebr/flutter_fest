@@ -19,8 +19,8 @@ class _ScheduleRowSingleSessionWidget extends ScheduleRowWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
-      ScheduleRowSessionWidget(),
+    return Row(children: const [
+      Expanded(child: ScheduleRowSessionWidget(),),
     ],);
   }
 }
