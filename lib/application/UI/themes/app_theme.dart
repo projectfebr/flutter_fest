@@ -9,5 +9,6 @@ abstract class AppTheme {
       selectedItemColor: Color(0xFF00BD13),
       unselectedItemColor: Color(0xFF52525E),
     ),
+    textTheme: TextTheme(bodyText2: TextStyle(color: Colors.white)),
   );
 }
