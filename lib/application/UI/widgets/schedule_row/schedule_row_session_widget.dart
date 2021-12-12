@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_fest/application/UI/widgets/schedule_row/schedule_row_widget.dart';
 import 'package:flutter_fest/resources/app_fonts.dart';
 import 'package:flutter_fest/resources/resources.dart';
 
@@ -18,13 +19,12 @@ class ScheduleRowSessionWidget extends StatelessWidget {
         gradient: RadialGradient(
           center: Alignment.topRight,
           colors: [
-            Color(0xFF00B90D),
+            const Color(0xFF00B90D),
             configuration._style.widgetBackground,
           ],
         ),
       ),
       padding: const EdgeInsets.only(left: 16, top: 4, right: 4, bottom: 16),
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -140,12 +140,6 @@ class _DescriptionWidget extends StatelessWidget {
   }
 }
 
-enum ScheduleRowSessionWidgetConfigurationProgressStatus {
-  oncoming,
-  current,
-  past,
-}
-
 class _ScheduleRowSessionWidgetConfigurationFavoriteStyle {
   final Color? favoriteButtonColor;
   final Color? widgetBackgroundGradient;
@@ -175,7 +169,7 @@ class ScheduleRowSessionWidgetConfiguration {
   final String speakerName;
   final String sessionTitle;
   final bool isFavorite;
-  final ScheduleRowSessionWidgetConfigurationProgressStatus progressStatus;
+  final ScheduleRowWidgetConfigurationProgressStatus progressStatus;
 
   ScheduleRowSessionWidgetConfiguration({
     required this.avatarUrl,
@@ -187,11 +181,11 @@ class ScheduleRowSessionWidgetConfiguration {
 
   _ScheduleRowSessionWidgetConfigurationProgressStyle get _style {
     switch (progressStatus) {
-      case ScheduleRowSessionWidgetConfigurationProgressStatus.oncoming:
+      case ScheduleRowWidgetConfigurationProgressStatus.oncoming:
         return oncomingStyle;
-      case ScheduleRowSessionWidgetConfigurationProgressStatus.past:
+      case ScheduleRowWidgetConfigurationProgressStatus.past:
         return pastStyle;
-      case ScheduleRowSessionWidgetConfigurationProgressStatus.current:
+      case ScheduleRowWidgetConfigurationProgressStatus.current:
         return pastStyle;
     }
   }
