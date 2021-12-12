@@ -186,7 +186,7 @@ class ScheduleRowSessionWidgetConfiguration {
       case ScheduleRowWidgetConfigurationProgressStatus.past:
         return pastStyle;
       case ScheduleRowWidgetConfigurationProgressStatus.current:
-        return pastStyle;
+        return oncomingStyle;
     }
   }
 
