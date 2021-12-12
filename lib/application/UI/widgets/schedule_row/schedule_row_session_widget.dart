@@ -3,28 +3,47 @@ import 'package:flutter_fest/resources/app_fonts.dart';
 import 'package:flutter_fest/resources/resources.dart';
 
 class ScheduleRowSessionWidget extends StatelessWidget {
-  const ScheduleRowSessionWidget({Key? key}) : super(key: key);
+  final ScheduleRowSessionWidgetConfiguration configuration;
+  const ScheduleRowSessionWidget({
+    Key? key,
+    required this.configuration,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF101115),
+        color: configuration._style.widgetBackground,
         borderRadius: BorderRadius.circular(20),
+        gradient: RadialGradient(
+          center: Alignment.topRight,
+          colors: [
+            Color(0xFF00B90D),
+            configuration._style.widgetBackground,
+          ],
+        ),
       ),
       padding: const EdgeInsets.only(left: 16, top: 4, right: 4, bottom: 16),
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            children: const [
-              Expanded(child: _SpeakerWidget()),
-              _FavoriteButtonWidget(),
+            children: [
+              Expanded(
+                  child: _SpeakerWidget(
+                configuration: configuration,
+              )),
+              _FavoriteButtonWidget(
+                configuration: configuration,
+              ),
             ],
           ),
           Padding(
             padding: const EdgeInsets.only(right: 12.0),
-            child: const _DescriptionWidget(),
+            child: _DescriptionWidget(
+              configuration: configuration,
+            ),
           ),
         ],
       ),
@@ -33,28 +52,34 @@ class ScheduleRowSessionWidget extends StatelessWidget {
 }
 
 class _SpeakerWidget extends StatelessWidget {
-  const _SpeakerWidget({Key? key}) : super(key: key);
+  final ScheduleRowSessionWidgetConfiguration configuration;
+
+  const _SpeakerWidget({
+    Key? key,
+    required this.configuration,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     const avatarRadius = 12.0;
     return Row(
-      children: const [
+      children: [
         CircleAvatar(
           radius: avatarRadius,
           foregroundImage: NetworkImage(
-            'https://www.meme-arsenal.com/memes/54f17b77ced3591bebe54c4f1cb32967.jpg',
+            configuration.avatarUrl,
+            // 'https://www.meme-arsenal.com/memes/54f17b77ced3591bebe54c4f1cb32967.jpg',
           ),
         ),
-        SizedBox(width: 8),
+        const SizedBox(width: 8),
         Expanded(
           child: Text(
-            'Иннокентий Христорожденнныйвсубботу',
+            configuration.speakerName,
             maxLines: 1,
             softWrap: false,
             overflow: TextOverflow.fade,
             style: TextStyle(
-              color: Colors.white,
+              color: configuration._style.widgetNameColor,
               fontSize: 14,
               fontFamily: AppFonts.basisGrotesquePro,
               fontWeight: FontWeight.w500,
@@ -68,7 +93,12 @@ class _SpeakerWidget extends StatelessWidget {
 }
 
 class _FavoriteButtonWidget extends StatelessWidget {
-  const _FavoriteButtonWidget({Key? key}) : super(key: key);
+  final ScheduleRowSessionWidgetConfiguration configuration;
+
+  const _FavoriteButtonWidget({
+    Key? key,
+    required this.configuration,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -77,22 +107,30 @@ class _FavoriteButtonWidget extends StatelessWidget {
       splashColor: Colors.transparent,
       iconSize: 24,
       onPressed: () {},
-      icon: Image.asset(AppImages.bookmark),
+      icon: Image.asset(
+        configuration._favoriteStyle.favoriteIconButton,
+        color: configuration._favoriteStyle.favoriteButtonColor,
+      ),
     );
   }
 }
 
 class _DescriptionWidget extends StatelessWidget {
-  const _DescriptionWidget({Key? key}) : super(key: key);
+  final ScheduleRowSessionWidgetConfiguration configuration;
+
+  const _DescriptionWidget({
+    Key? key,
+    required this.configuration,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  Text(
-      'Субъуктивность в оценке дизайне',
+    return Text(
+      configuration.sessionTitle,
       maxLines: 2,
       overflow: TextOverflow.fade,
       style: TextStyle(
-        color: Colors.white.withOpacity(0.88),
+        color: configuration._style.widgetSessionTitleColor,
         fontSize: 18,
         fontFamily: AppFonts.steinback,
         fontWeight: FontWeight.w500,
@@ -100,4 +138,91 @@ class _DescriptionWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+enum ScheduleRowSessionWidgetConfigurationProgressStatus {
+  oncoming,
+  current,
+  past,
+}
+
+class _ScheduleRowSessionWidgetConfigurationFavoriteStyle {
+  final Color? favoriteButtonColor;
+  final Color? widgetBackgroundGradient;
+  final String favoriteIconButton;
+
+  const _ScheduleRowSessionWidgetConfigurationFavoriteStyle({
+    required this.favoriteIconButton,
+    required this.favoriteButtonColor,
+    required this.widgetBackgroundGradient,
+  });
+}
+
+class _ScheduleRowSessionWidgetConfigurationProgressStyle {
+  final Color widgetBackground;
+  final Color widgetNameColor;
+  final Color widgetSessionTitleColor;
+
+  const _ScheduleRowSessionWidgetConfigurationProgressStyle({
+    required this.widgetBackground,
+    required this.widgetNameColor,
+    required this.widgetSessionTitleColor,
+  });
+}
+
+class ScheduleRowSessionWidgetConfiguration {
+  final String avatarUrl;
+  final String speakerName;
+  final String sessionTitle;
+  final bool isFavorite;
+  final ScheduleRowSessionWidgetConfigurationProgressStatus progressStatus;
+
+  ScheduleRowSessionWidgetConfiguration({
+    required this.avatarUrl,
+    required this.speakerName,
+    required this.sessionTitle,
+    required this.isFavorite,
+    required this.progressStatus,
+  });
+
+  _ScheduleRowSessionWidgetConfigurationProgressStyle get _style {
+    switch (progressStatus) {
+      case ScheduleRowSessionWidgetConfigurationProgressStatus.oncoming:
+        return oncomingStyle;
+      case ScheduleRowSessionWidgetConfigurationProgressStatus.past:
+        return pastStyle;
+      case ScheduleRowSessionWidgetConfigurationProgressStatus.current:
+        return pastStyle;
+    }
+  }
+
+  _ScheduleRowSessionWidgetConfigurationFavoriteStyle get _favoriteStyle =>
+      isFavorite ? isFavoriteStyle : isNotFavoriteStyle;
+
+  static const oncomingStyle =
+      _ScheduleRowSessionWidgetConfigurationProgressStyle(
+    widgetBackground: Color(0xFF101115),
+    widgetNameColor: Color(0xFF52525E),
+    widgetSessionTitleColor: Colors.white,
+  );
+
+  static const pastStyle = _ScheduleRowSessionWidgetConfigurationProgressStyle(
+    widgetBackground: Colors.transparent,
+    widgetNameColor: Color(0x7A52525E),
+    widgetSessionTitleColor: Color(0xFF52525E),
+  );
+
+  static const isFavoriteStyle =
+      _ScheduleRowSessionWidgetConfigurationFavoriteStyle(
+    favoriteButtonColor: Color(0xFF00BD13),
+    widgetBackgroundGradient: Color(0xFF00BD13),
+    favoriteIconButton: AppImages.bookmarkFull,
+  );
+
+  static const isNotFavoriteStyle =
+      _ScheduleRowSessionWidgetConfigurationFavoriteStyle(
+    favoriteButtonColor: null,
+    widgetBackgroundGradient: null,
+    favoriteIconButton: AppImages.bookmark,
+  );
 }
