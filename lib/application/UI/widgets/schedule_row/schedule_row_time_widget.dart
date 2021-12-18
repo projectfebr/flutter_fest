@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_fest/application/UI/themes/app_colors.dart';
+import 'package:flutter_fest/application/UI/themes/app_text_styles.dart';
 import 'package:flutter_fest/application/UI/widgets/schedule_row/schedule_row_widget.dart';
-import 'package:flutter_fest/resources/app_fonts.dart';
 
 class ScheduleRowTimeWidget extends StatelessWidget {
   final ScheduleRowTimeWidgetConfiguration configuration;
-  const ScheduleRowTimeWidget({Key? key, required this.configuration})
-      : super(key: key);
+  const ScheduleRowTimeWidget({Key? key, required this.configuration}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    const textStyle = TextStyle(
-      fontSize: 12,
-      fontFamily: AppFonts.basisGrotesquePro,
-      fontWeight: FontWeight.w500,
-      height: 1.3333,
-    );
     return SizedBox(
       width: 48,
       child: Row(
@@ -26,23 +20,21 @@ class ScheduleRowTimeWidget extends StatelessWidget {
             children: [
               Text(
                 configuration.startTime,
-                style:
-                    textStyle.copyWith(color: configuration._style.startColor),
+                style: AppTextStyles.bookTextSmall.copyWith(color: configuration._style.startColor),
               ),
               Text(
                 configuration.finishTime,
                 style:
-                    textStyle.copyWith(color: configuration._style.finishColor),
+                    AppTextStyles.bookTextSmall.copyWith(color: configuration._style.finishColor),
               ),
             ],
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 11),
           Column(
             children: [
               Expanded(
                 child: _DividerWidget(
-                    color: configuration._style.startColor,
-                    position: _DividerWidgetPosition.top),
+                    color: configuration._style.startColor, position: _DividerWidgetPosition.top),
               ),
               Expanded(
                 child: _DividerWidget(
@@ -62,8 +54,7 @@ enum _DividerWidgetPosition { top, bottom }
 class _DividerWidget extends StatelessWidget {
   final Color color;
   final _DividerWidgetPosition position;
-  const _DividerWidget({Key? key, required this.color, required this.position})
-      : super(key: key);
+  const _DividerWidget({Key? key, required this.color, required this.position}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -123,12 +114,17 @@ class ScheduleRowTimeWidgetConfiguration {
   });
 
   static const oncomingStyle = _ScheduleRowTimeWidgetConfigurationProgressStyle(
-      startColor: Color(0xB7FFFFFF), finishColor: Color(0xB7FFFFFF));
+    startColor: AppColors.white72,
+    finishColor: AppColors.white72,
+  );
 
   static const pastStyle = _ScheduleRowTimeWidgetConfigurationProgressStyle(
-      startColor: Color(0xB752525E), finishColor: Color(0xB752525E));
+    startColor: AppColors.darkText72,
+    finishColor: AppColors.darkText72,
+  );
 
-  static const inProgressStyle =
-      _ScheduleRowTimeWidgetConfigurationProgressStyle(
-          startColor: Color(0xB752525E), finishColor: Color(0xB700BD13));
+  static const inProgressStyle = _ScheduleRowTimeWidgetConfigurationProgressStyle(
+    startColor: AppColors.darkText72,
+    finishColor: AppColors.green72,
+  );
 }

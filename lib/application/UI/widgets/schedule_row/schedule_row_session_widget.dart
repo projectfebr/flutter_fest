@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_fest/application/UI/themes/app_colors.dart';
+import 'package:flutter_fest/application/UI/themes/app_text_styles.dart';
 import 'package:flutter_fest/application/UI/widgets/schedule_row/schedule_row_widget.dart';
-import 'package:flutter_fest/resources/app_fonts.dart';
 import 'package:flutter_fest/resources/resources.dart';
 
 class ScheduleRowSessionWidget extends StatelessWidget {
@@ -78,13 +79,7 @@ class _SpeakerWidget extends StatelessWidget {
             maxLines: 1,
             softWrap: false,
             overflow: TextOverflow.fade,
-            style: TextStyle(
-              color: configuration._style.widgetNameColor,
-              fontSize: 14,
-              fontFamily: AppFonts.basisGrotesquePro,
-              fontWeight: FontWeight.w500,
-              height: 1.4285714286,
-            ),
+            style: AppTextStyles.bookText.copyWith(color: configuration._style.speakerNameColor),
           ),
         ),
       ],
@@ -129,13 +124,8 @@ class _DescriptionWidget extends StatelessWidget {
       configuration.sessionTitle,
       maxLines: 2,
       overflow: TextOverflow.fade,
-      style: TextStyle(
-        color: configuration._style.widgetSessionTitleColor,
-        fontSize: 18,
-        fontFamily: AppFonts.steinback,
-        fontWeight: FontWeight.w500,
-        height: 1.22222,
-      ),
+      style:
+          AppTextStyles.steinbackNormalText.copyWith(color: configuration._style.sessionTitleColor),
     );
   }
 }
@@ -154,13 +144,13 @@ class _ScheduleRowSessionWidgetConfigurationFavoriteStyle {
 
 class _ScheduleRowSessionWidgetConfigurationProgressStyle {
   final Color widgetBackground;
-  final Color widgetNameColor;
-  final Color widgetSessionTitleColor;
+  final Color speakerNameColor;
+  final Color sessionTitleColor;
 
   const _ScheduleRowSessionWidgetConfigurationProgressStyle({
     required this.widgetBackground,
-    required this.widgetNameColor,
-    required this.widgetSessionTitleColor,
+    required this.speakerNameColor,
+    required this.sessionTitleColor,
   });
 }
 
@@ -193,28 +183,25 @@ class ScheduleRowSessionWidgetConfiguration {
   _ScheduleRowSessionWidgetConfigurationFavoriteStyle get _favoriteStyle =>
       isFavorite ? isFavoriteStyle : isNotFavoriteStyle;
 
-  static const oncomingStyle =
-      _ScheduleRowSessionWidgetConfigurationProgressStyle(
-    widgetBackground: Color(0xFF101115),
-    widgetNameColor: Color(0xFF52525E),
-    widgetSessionTitleColor: Colors.white,
+  static const oncomingStyle = _ScheduleRowSessionWidgetConfigurationProgressStyle(
+    widgetBackground: AppColors.darkSecondary,
+    speakerNameColor: AppColors.darkText,
+    sessionTitleColor: AppColors.white,
   );
 
   static const pastStyle = _ScheduleRowSessionWidgetConfigurationProgressStyle(
     widgetBackground: Colors.transparent,
-    widgetNameColor: Color(0x7A52525E),
-    widgetSessionTitleColor: Color(0xFF52525E),
+    speakerNameColor: AppColors.darkText48,
+    sessionTitleColor: AppColors.darkText,
   );
 
-  static const isFavoriteStyle =
-      _ScheduleRowSessionWidgetConfigurationFavoriteStyle(
-    favoriteButtonColor: Color(0xFF00BD13),
-    widgetBackgroundGradient: Color(0xFF00BD13),
+  static const isFavoriteStyle = _ScheduleRowSessionWidgetConfigurationFavoriteStyle(
+    favoriteButtonColor: Colors.green,
+    widgetBackgroundGradient: Colors.green,
     favoriteIconButton: AppImages.bookmarkFull,
   );
 
-  static const isNotFavoriteStyle =
-      _ScheduleRowSessionWidgetConfigurationFavoriteStyle(
+  static const isNotFavoriteStyle = _ScheduleRowSessionWidgetConfigurationFavoriteStyle(
     favoriteButtonColor: null,
     widgetBackgroundGradient: null,
     favoriteIconButton: AppImages.bookmark,

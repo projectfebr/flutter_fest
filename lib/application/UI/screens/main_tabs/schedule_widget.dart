@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_fest/application/UI/themes/app_colors.dart';
 import 'package:flutter_fest/application/UI/widgets/schedule_row/schedule_row_widget.dart';
 import 'package:flutter_fest/resources/resources.dart';
 
@@ -96,8 +97,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 }
 
 class _SectionsButtonsWidget extends StatelessWidget {
-  const _SectionsButtonsWidget({Key? key, required this.topInset})
-      : super(key: key);
+  const _SectionsButtonsWidget({Key? key, required this.topInset}) : super(key: key);
 
   final double topInset;
 
@@ -107,8 +107,7 @@ class _SectionsButtonsWidget extends StatelessWidget {
     const startGradientPoint = 1;
     const itemGradientWidth = 2;
     const halfItemGradientWidth = itemGradientWidth / 2;
-    const endGradientPoint =
-        totalItem * itemGradientWidth + halfItemGradientWidth;
+    const endGradientPoint = totalItem * itemGradientWidth + halfItemGradientWidth;
     return Container(
       padding: EdgeInsets.only(top: topInset),
       color: Theme.of(context).scaffoldBackgroundColor,
@@ -117,10 +116,8 @@ class _SectionsButtonsWidget extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: totalItem,
         itemBuilder: (context, index) {
-          final currentGradientStartPoint =
-              -(startGradientPoint + index * itemGradientWidth);
-          final currentGradientEndPoint =
-              endGradientPoint + currentGradientStartPoint;
+          final currentGradientStartPoint = -(startGradientPoint + index * itemGradientWidth);
+          final currentGradientEndPoint = endGradientPoint + currentGradientStartPoint;
 
           return Center(
             child: SizedBox(
@@ -141,12 +138,10 @@ class _SectionsButtonsWidget extends StatelessWidget {
                 child: Ink(
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
-                          begin: Alignment(
-                              currentGradientStartPoint.toDouble(), 0),
+                          begin: Alignment(currentGradientStartPoint.toDouble(), 0),
                           end: Alignment(currentGradientEndPoint.toDouble(), 0),
-                          colors: const [Color(0xFF00BD13), Color(0xFF170AF4)]),
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(18))),
+                          colors: const [AppColors.green, AppColors.blue]),
+                      borderRadius: const BorderRadius.all(Radius.circular(18))),
                   child: Center(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
