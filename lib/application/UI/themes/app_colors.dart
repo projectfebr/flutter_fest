@@ -11,4 +11,5 @@ abstract class AppColors {
   static const darkText48 = Color(0x7A52525E);
   static const white = Color(0xFFFFFFFF);
   static const white72 = Color(0xB7FFFFFF);
+  static const white88 = Color(0xE0FFFFFF);
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fest/application/UI/themes/app_colors.dart';
+import 'package:flutter_fest/application/UI/widgets/schedule_row/schedule_row_brake_widget.dart';
 import 'package:flutter_fest/application/UI/widgets/schedule_row/schedule_row_widget.dart';
 import 'package:flutter_fest/resources/resources.dart';
 
@@ -22,6 +23,15 @@ class ScheduleWidget extends StatelessWidget {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
+                if (index == 2) {
+                  return const Padding(
+                    padding: EdgeInsets.only(top: 16, left: 14, right: 14),
+                    child: SizedBox(
+                      height: 70,
+                      child: ScheduleRowBrakeWidget(),
+                    ),
+                  );
+                }
                 return Padding(
                   padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
                   child: ScheduleRowWidget.single(),
